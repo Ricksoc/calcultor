@@ -73,10 +73,9 @@ main {
   grid-gap: 5px 10px;
 }
 
-.buttons__large {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 0 10px;
+.button__large {
+  margin-top: 10px;
+  grid-column: span 2;
 }
 
 .button__number {

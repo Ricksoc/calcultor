@@ -5,7 +5,7 @@ import Display from "./Display";
 import Button from "./Button";
 
 export default function App() {
-  const idArray = Array.from({ length: 10 }, () => nanoid());
+  const idArray = Array.from({ length: 18 }, () => nanoid());
   console.log(idArray);
 
   return (
@@ -30,10 +30,8 @@ export default function App() {
             <Button />
             <Button />
             <Button class="button__symbol" />
-          </div>
-          <div className="buttons__large">
-            <Button class="button__symbol" />
-            <Button class="button__clear" />
+            <Button class="button__symbol button__large" />
+            <Button class="button__clear button__large" />
           </div>
         </div>
       </div>
