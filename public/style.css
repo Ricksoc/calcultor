@@ -1,0 +1,102 @@
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  background-color: #000000;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+main {
+  min-height: 550px;
+  width: 550px;
+  background-color: #ece5c7;
+  margin: 50px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 250px;
+  min-height: 375px;
+  border: 3px solid darkgray;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.display {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #c2ded1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.display__text {
+  margin: 0 5px 0 5px;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.buttons__small {
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px 10px;
+}
+
+.buttons__large {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0 10px;
+}
+
+.button__number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+  background-color: #cdc2ae;
+  border-radius: 10px;
+  border: 1px solid black;
+  font-size: 1.2rem;
+}
+
+.button__symbol {
+  background-color: #a5becc;
+}
+
+.button__clear {
+  background-color: #a25b5b;
+}
+
+/* #7C3E66 #A5BECC #243A73 */
