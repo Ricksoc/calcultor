@@ -88,7 +88,7 @@ Updates display state */
       if (/[.]/.test(currentDisplay)) {
         return;
         // If decimal clicked after symbol add 0.
-      } else if (!display.length || /[*+-/]/.test(prevInput)) {
+      } else if (!display.length || /[*+-/)]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + `0${value}`);
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
