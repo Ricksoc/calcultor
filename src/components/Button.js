@@ -6,6 +6,6 @@ export default function Button(props) {
       className={
         props.class ? `button__number ${props.class}` : "button__number"
       }
-    >1</button>
+    >{props.value}</button>
   );
 }
