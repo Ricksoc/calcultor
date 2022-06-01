@@ -62,10 +62,23 @@ Updates display state */
     // Number inputs
     if (name === "number") {
       setDisplay((prevDisplay) => prevDisplay + value);
-      // Symbol inputs - overwrites last input if also a symbol
-    } else if (name === "symbol") {
+      // Zero input
+    } else if (name === "zero") {
+      if (/[.]/.test(currentDisplay)) {
+        setDisplay((prevDisplay) => prevDisplay + value);
+      } else if (prevInput === "0" || !display.length) {
+        return;
+      } else {
+        setDisplay((prevDisplay) => prevDisplay + value);
+      }
+    }
+    // Symbol inputs - overwrites last input if also a symbol
+    else if (name === "symbol") {
       if (/[*/+-]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay.slice(0, -1) + value);
+        // Prevent first input being a symbol
+      } else if (!display.length) {
+        return;
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
       }
@@ -75,7 +88,7 @@ Updates display state */
       if (/[.]/.test(currentDisplay)) {
         return;
         // If decimal clicked after symbol add 0.
-      } else if (/[*/+-]/.test(prevInput)) {
+      } else if (!display.length || /[*+-/]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + `0${value}`);
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
@@ -83,7 +96,7 @@ Updates display state */
       // Negative input
     } else if (name === "negative") {
       // Only start new number with (-)
-      if (!display.length || /[*+-/]+/.test(prevInput)) {
+      if (!display.length || /[*+-/]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + value);
       } else {
         return;
