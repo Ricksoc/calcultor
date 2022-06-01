@@ -6,6 +6,11 @@ export default function Button(props) {
       className={
         props.class ? `button__number ${props.class}` : "button__number"
       }
-    >{props.value}</button>
+      name={props.name}
+      value={props.value}
+      onClick={(event) => props.handleClick(event)}
+    >
+      {props.value}
+    </button>
   );
 }
