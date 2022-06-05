@@ -25,7 +25,7 @@ export default function App() {
       value: ".",
     },
     { name: "zero", value: "0" },
-    { name: "negative", value: "(-)" },
+    { name: "negative", value: "\u2212" },
     { name: "symbol", value: "+", class: "button__symbol" },
     {
       name: "equals",
@@ -36,7 +36,6 @@ export default function App() {
     {
       name: "clear",
       value: "CLR",
-
       class: "button__clear button__large",
     },
   ];
@@ -57,23 +56,27 @@ Updates display state */
     const { name, value } = event.target;
     // Get last character of current display string
     const prevInput = display.slice(-1);
-    // Split display on symbol characters and get last group
+    // Split display on symbols and get last group
     const currentDisplay = display.split(/[*/+-]/).slice(-1);
     // Number inputs
     if (name === "number") {
       setDisplay((prevDisplay) => prevDisplay + value);
       // Zero input
     } else if (name === "zero") {
+      // Allow zero if decimal point is in current number
       if (/[.]/.test(currentDisplay)) {
         setDisplay((prevDisplay) => prevDisplay + value);
+        // Don't allow more than one zero without decimal point
+        //or 0 to be entered as the first number input
       } else if (prevInput === "0" || !display.length) {
         return;
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
       }
     }
-    // Symbol inputs - overwrites last input if also a symbol
+    // Symbol inputs
     else if (name === "symbol") {
+      // overwrites last input if also a symbol
       if (/[*/+-]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay.slice(0, -1) + value);
         // Prevent first input being a symbol
@@ -88,15 +91,18 @@ Updates display state */
       if (/[.]/.test(currentDisplay)) {
         return;
         // If decimal clicked after symbol add 0.
-      } else if (!display.length || /[*+-/)]/.test(prevInput)) {
+      } else if (!display.length || /[*+-/\u2212]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + `0${value}`);
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
       }
       // Negative input
     } else if (name === "negative") {
-      // Only start new number with (-)
-      if (!display.length || /[*+-/]/.test(prevInput)) {
+      // Don't place a (-) immideitely after .
+      if (/[.]/.test(prevInput)) {
+        return;
+        // Only start new number with (-)
+      } else if (!display.length || /[*+-/]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + value);
       } else {
         return;
