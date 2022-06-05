@@ -46,7 +46,7 @@ export default function App() {
       name={button.name}
       value={button.value}
       class={button.class && button.class}
-      handleClick={updateDisplay}
+      handleClick={button.name === "equals" ? calculate : updateDisplay}
     />
   ));
 
@@ -111,6 +111,20 @@ Updates display state */
       setDisplay("");
     } else {
       console.log("function not yet defined");
+    }
+  }
+
+  function calculate(event) {
+    // const { name, value } = event.target;
+    // Get last character of current display string
+    const prevInput = display.slice(-1);
+    // Split display on symbols and get last group
+    const currentDisplay = display.split(/[*/+-]/).slice(-1);
+
+    if (/[0-9]/.test(prevInput)) {
+      console.log("calculating");
+    } else {
+      setDisplay("Error");
     }
   }
   console.log(display);
