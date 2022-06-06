@@ -81,16 +81,19 @@ main {
   grid-column: span 2;
 }
 
-.button__number {
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40px;
   width: 100%;
-  background-color: #cdc2ae;
   border-radius: 10px;
   border: 1px solid black;
   font-size: 1.2rem;
+}
+
+.button__number {
+  background-color: #cdc2ae;
 }
 
 .button__symbol {

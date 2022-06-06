@@ -8,24 +8,25 @@ export default function App() {
 
   // Calculator button content
   const buttonArray = [
-    { name: "number", value: "1" },
-    { name: "number", value: "2" },
-    { name: "number", value: "3" },
+    { name: "number", value: "1", class: "button__number" },
+    { name: "number", value: "2", class: "button__number" },
+    { name: "number", value: "3", class: "button__number" },
     { name: "symbol", value: "/", class: "button__symbol" },
-    { name: "number", value: "4" },
-    { name: "number", value: "5" },
-    { name: "number", value: "6" },
+    { name: "number", value: "4", class: "button__number" },
+    { name: "number", value: "5", class: "button__number" },
+    { name: "number", value: "6", class: "button__number" },
     { name: "symbol", value: "*", class: "button__symbol" },
-    { name: "number", value: "7" },
-    { name: "number", value: "8" },
-    { name: "number", value: "9" },
-    { name: "symbol", value: "-", class: "button__symbol" },
+    { name: "number", value: "7", class: "button__number" },
+    { name: "number", value: "8", class: "button__number" },
+    { name: "number", value: "9", class: "button__number" },
+    { name: "symbol", value: "\u2212", class: "button__symbol" },
     {
       name: "decimal",
       value: ".",
+      class: "button__number",
     },
-    { name: "zero", value: "0" },
-    { name: "negative", value: "\u2212" },
+    { name: "zero", value: "0", class: "button__number" },
+    { name: "negative", value: "-", class: "button__number" },
     { name: "symbol", value: "+", class: "button__symbol" },
     {
       name: "equals",
@@ -45,7 +46,7 @@ export default function App() {
       key={index}
       name={button.name}
       value={button.value}
-      class={button.class && button.class}
+      class={button.class}
       handleClick={button.name === "equals" ? calculate : updateDisplay}
     />
   ));
@@ -60,8 +61,13 @@ Updates display state */
     const currentDisplay = display.split(/[*/+-]/).slice(-1);
     // Number inputs
     if (name === "number") {
-      setDisplay((prevDisplay) => prevDisplay + value);
-      // Zero input
+      // If previous input is zero don't allow number
+      if (prevInput === "0") {
+        return;
+      } else {
+        setDisplay((prevDisplay) => prevDisplay + value);
+        // Zero input
+      }
     } else if (name === "zero") {
       // Allow zero if decimal point is in current number
       if (/[.]/.test(currentDisplay)) {
@@ -77,7 +83,7 @@ Updates display state */
     // Symbol inputs
     else if (name === "symbol") {
       // overwrites last input if also a symbol
-      if (/[*/+-]/.test(prevInput)) {
+      if (/[*/+\u2212]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay.slice(0, -1) + value);
         // Prevent first input being a symbol
       } else if (!display.length) {
@@ -102,7 +108,7 @@ Updates display state */
       if (/[.]/.test(prevInput)) {
         return;
         // Only start new number with (-)
-      } else if (!display.length || /[*+-/]/.test(prevInput)) {
+      } else if (!display.length || /[*+\u2212/]/.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + value);
       } else {
         return;
@@ -119,14 +125,40 @@ Updates display state */
     // Get last character of current display string
     const prevInput = display.slice(-1);
     // Split display on symbols and get last group
-    const currentDisplay = display.split(/[*/+-]/).slice(-1);
+    // const currentDisplay = display.split(/[*/+-]/).slice(-1);
 
-    if (/[0-9]/.test(prevInput)) {
-      console.log("calculating");
-    } else {
+    // Check last input is a number and reset calculation if not
+    if (!/[0-9]/.test(prevInput) || !display.length) {
       setDisplay("Error");
+      setTimeout(() => setDisplay(""), 1000);
+    }
+
+    // RSplit display into numbers an operators
+    const splitDisplay = display.split(/([+*/\u2212])/);
+    // console.log(splitDisplay);
+    console.log(splitDisplay);
+
+    let newDisplay = [splitDisplay[0]];
+
+    for (let i = 1; i < splitDisplay.length; i += 2) {
+      console.log(splitDisplay[i], splitDisplay[i + 1]);
+      let firstNumber = newDisplay.pop();
+      let operand = splitDisplay[i];
+      let secondNumber = splitDisplay[i + 1];
+
+      if (/\*/.test(operand)) {
+        let calc = parseInt(firstNumber) * parseInt(secondNumber);
+        newDisplay.push(calc);
+      } else if (/\//.test(operand)) {
+        let calc = parseInt(firstNumber) / parseInt(secondNumber);
+        newDisplay.push(calc);
+      } else {
+        newDisplay.push(firstNumber, operand, secondNumber);
+      }
+      console.log(newDisplay);
     }
   }
+
   console.log(display);
 
   return (
