@@ -58,14 +58,14 @@ Updates display state */
     // Get last character of current display string
     const prevInput = display.slice(-1);
     // Split display on symbols and get last group
-    const prevNumber = display.split(/[*/+\u2122]/).slice(-1);
+    const prevNumber = display.split(/[*/+\u2212]/u).slice(-1);
+    console.log(prevNumber);
     // Number inputs
     if (name === "number") {
       // If previous input is symbol followed by a zero don't allow number
       if (prevInput === "0" && prevNumber[0].length === 1) {
         return;
       } else {
-        console.log(prevNumber);
         setDisplay((prevDisplay) => prevDisplay + value);
         // Zero input
       }
@@ -74,7 +74,8 @@ Updates display state */
       if (/[.]/.test(prevNumber)) {
         setDisplay((prevDisplay) => prevDisplay + value);
         // Don't allow numbers to start 00
-      } else if (!display.length || /^0+/.test(prevNumber)) {
+      } else if (!display.length || /^-*0+/.test(prevNumber)) {
+        console.log(prevNumber);
         return;
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
@@ -83,10 +84,10 @@ Updates display state */
     // Symbol inputs
     else if (name === "symbol") {
       // overwrites last input if also a symbol
-      if (/[*/+\u2212]/.test(prevInput)) {
+      if (/[*/+\u2212]/u.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay.slice(0, -1) + value);
-        // Prevent first input being a symbol
-      } else if (!display.length) {
+        // Prevent first input being a symbol or a symbol immediately after decimal
+      } else if (!display.length || prevInput === ".") {
         return;
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
@@ -97,7 +98,7 @@ Updates display state */
       if (/[.]/.test(prevNumber)) {
         return;
         // If decimal clicked after symbol add 0.
-      } else if (!display.length || /[*+-/\u2212]/.test(prevInput)) {
+      } else if (!display.length || /[*+-/\u2212]/u.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + `0${value}`);
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
@@ -108,7 +109,7 @@ Updates display state */
       if (/[.]/.test(prevInput)) {
         return;
         // Only start new number with (-)
-      } else if (!display.length || /[*+\u2212/]/.test(prevInput)) {
+      } else if (!display.length || /[*+\u2212/]/u.test(prevInput)) {
         setDisplay((prevDisplay) => prevDisplay + value);
       } else {
         return;
@@ -134,7 +135,7 @@ Updates display state */
     }
 
     // RSplit display into numbers an operators
-    const splitDisplay = display.split(/([+*/\u2212])/);
+    const splitDisplay = display.split(/([+*/\u2212])/u);
     // console.log(splitDisplay);
     console.log(splitDisplay);
 
@@ -158,8 +159,6 @@ Updates display state */
       console.log(newDisplay);
     }
   }
-
-  console.log(display);
 
   return (
     <main>
