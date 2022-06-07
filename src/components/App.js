@@ -58,23 +58,23 @@ Updates display state */
     // Get last character of current display string
     const prevInput = display.slice(-1);
     // Split display on symbols and get last group
-    const currentDisplay = display.split(/[*/+-]/).slice(-1);
+    const prevNumber = display.split(/[*/+\u2122]/).slice(-1);
     // Number inputs
     if (name === "number") {
-      // If previous input is zero don't allow number
-      if (prevInput === "0") {
+      // If previous input is symbol followed by a zero don't allow number
+      if (prevInput === "0" && prevNumber[0].length === 1) {
         return;
       } else {
+        console.log(prevNumber);
         setDisplay((prevDisplay) => prevDisplay + value);
         // Zero input
       }
     } else if (name === "zero") {
       // Allow zero if decimal point is in current number
-      if (/[.]/.test(currentDisplay)) {
+      if (/[.]/.test(prevNumber)) {
         setDisplay((prevDisplay) => prevDisplay + value);
-        // Don't allow more than one zero without decimal point
-        //or 0 to be entered as the first number input
-      } else if (prevInput === "0" || !display.length) {
+        // Don't allow numbers to start 00
+      } else if (!display.length || /^0+/.test(prevNumber)) {
         return;
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
@@ -94,7 +94,7 @@ Updates display state */
       // Decimal input
     } else if (name === "decimal") {
       // Do not add decimal if last number already contains one
-      if (/[.]/.test(currentDisplay)) {
+      if (/[.]/.test(prevNumber)) {
         return;
         // If decimal clicked after symbol add 0.
       } else if (!display.length || /[*+-/\u2212]/.test(prevInput)) {
@@ -125,7 +125,7 @@ Updates display state */
     // Get last character of current display string
     const prevInput = display.slice(-1);
     // Split display on symbols and get last group
-    // const currentDisplay = display.split(/[*/+-]/).slice(-1);
+    // const prevNumber = display.split(/[*/+-]/).slice(-1);
 
     // Check last input is a number and reset calculation if not
     if (!/[0-9]/.test(prevInput) || !display.length) {
