@@ -1,70 +1,25 @@
-# Getting Started with Create React App
+# Calculator App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![](./screenshot.png)
 
-## Available Scripts
+I have coded a simple calculator application using React. The app follows the criteria laid out in the [freeCodeCamp](https://www.freecodecamp.org/learn/front-end-development-libraries/front-end-development-libraries-projects/build-a-javascript-calculator) challenge and uses expressive logic.
 
-In the project directory, you can run:
+## Built With
+* React
+* Flexbox
+* Grid
 
-### `npm start`
+## What I Did
+Before starting this project I read a line that in web development first you build the outline, where you spend a little time thinking and a lot of time coding, then you add the logic where the reverse is true. That was definitely the case here where I was able to create the display using hard coded content quite quickly.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+With adding the logic I broke the challenge down into two main parts: handling the updated input for each button click other than "equals" and handling the calculation once "equals" was pressed. In both cases I was able to come up with an outline solution to the problem which was most of the way there but then had to tackle specific challenges and esge cases as I progressed through.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+A particular challenge was finding a way to treat the subtration and negative number buttons differently which I solved using u2212 and the unicode delimiter of regex.
 
-### `npm test`
+## What I Learned
+This project mostly used skills which I already had such as loops, logic operators and regex but applied them in a more involved way that I had on any self-led project to date. One specific thing I did learn was the use of the unicode delimiter of regex.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Future Work
+Some areas of this program which I think could be improved are:
+* Error handling - I use logic functions to handle some errors at the point where they occur but refactoring into try-catch might be beneficial.
+* Elegance - the updateDisplay function in particular is done with brute force logic and it may be possible to implement something more elegant and simpler when I have a deeper understanding of React.
