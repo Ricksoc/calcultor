@@ -59,10 +59,9 @@ Updates display state */
     const prevInput = display.slice(-1);
     // Split display on symbols and get last group
     const prevNumber = display.split(/[*/+\u2212]/u).slice(-1);
-    console.log(prevNumber);
     // Number inputs
     if (name === "number") {
-      // If previous input is symbol followed by a zero don't allow number
+      // Don't allow numbers to start 0[1-9]
       if (prevInput === "0" && prevNumber[0].length === 1) {
         return;
       } else {
@@ -73,9 +72,8 @@ Updates display state */
       // Allow zero if decimal point is in current number
       if (/[.]/.test(prevNumber)) {
         setDisplay((prevDisplay) => prevDisplay + value);
-        // Don't allow numbers to start 00
+        // Don't allow numbers to start 00 or -00
       } else if (!display.length || /^-*0+/.test(prevNumber)) {
-        console.log(prevNumber);
         return;
       } else {
         setDisplay((prevDisplay) => prevDisplay + value);
@@ -125,6 +123,7 @@ Updates display state */
     // const { name, value } = event.target;
     // Get last character of current display string
     const prevInput = display.slice(-1);
+
     // Split display on symbols and get last group
     // const prevNumber = display.split(/[*/+-]/).slice(-1);
 
@@ -134,30 +133,46 @@ Updates display state */
       setTimeout(() => setDisplay(""), 1000);
     }
 
-    // RSplit display into numbers an operators
+    // Split display into numbers an operators
     const splitDisplay = display.split(/([+*/\u2212])/u);
-    // console.log(splitDisplay);
-    console.log(splitDisplay);
 
     let newDisplay = [splitDisplay[0]];
-
+    // Compute all * and / calculations only
     for (let i = 1; i < splitDisplay.length; i += 2) {
-      console.log(splitDisplay[i], splitDisplay[i + 1]);
       let firstNumber = newDisplay.pop();
       let operand = splitDisplay[i];
       let secondNumber = splitDisplay[i + 1];
 
       if (/\*/.test(operand)) {
-        let calc = parseInt(firstNumber) * parseInt(secondNumber);
+        let calc = parseFloat(firstNumber) * parseFloat(secondNumber);
         newDisplay.push(calc);
       } else if (/\//.test(operand)) {
-        let calc = parseInt(firstNumber) / parseInt(secondNumber);
+        let calc = parseFloat(firstNumber) / parseFloat(secondNumber);
         newDisplay.push(calc);
       } else {
         newDisplay.push(firstNumber, operand, secondNumber);
       }
-      console.log(newDisplay);
     }
+
+    // Compute all + and - calculations
+    let result = newDisplay[0];
+
+    for (let i = 1; i < newDisplay.length; i += 2) {
+      let operand = newDisplay[i];
+      let secondNumber = newDisplay[i + 1];
+      if (/\+/.test(operand)) {
+        let temp = parseFloat(result) + parseFloat(secondNumber);
+        result = temp;
+      } else {
+        let temp = parseFloat(result) - parseFloat(secondNumber);
+        result = temp;
+      }
+    }
+    //round result to 5dp and remove any excess 0s
+    let roundResult = parseFloat(result.toFixed(5));
+
+    // Set display to result of calculation
+    setDisplay(roundResult.toString());
   }
 
   return (
