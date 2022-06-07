@@ -125,9 +125,10 @@ Updates display state */
     const prevInput = display.slice(-1);
 
     // Split display on symbols and get last group
-    // const prevNumber = display.split(/[*/+-]/).slice(-1);
+    // const fullInput = display.split(/[*/+-]/);
 
     // Check last input is a number and reset calculation if not
+    // Also check that a calculation is possible
     if (!/[0-9]/.test(prevInput) || !display.length) {
       setDisplay("Error");
       setTimeout(() => setDisplay(""), 1000);
@@ -168,11 +169,15 @@ Updates display state */
         result = temp;
       }
     }
-    //round result to 5dp and remove any excess 0s
-    let roundResult = parseFloat(result.toFixed(5));
 
-    // Set display to result of calculation
-    setDisplay(roundResult.toString());
+    // Check result is a number
+    if (typeof result === "number") {
+      //round result to 5dp and remove any excess 0s
+      let roundResult = parseFloat(result.toFixed(5));
+
+      // Set display to result of calculation
+      setDisplay(roundResult.toString());
+    }
   }
 
   return (
